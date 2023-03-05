@@ -66,12 +66,13 @@ class _AnasayfaState extends State<Anasayfa> {
                     "${OgretmenlerRepository().ogretmenler.length} Öğretmen")),
 
             TextButton(
-                onPressed: () {
-                  _mesajlaraGit(context);
-                },
-                child: Text(
-                    style: TextStyle(fontSize: 20),
-                    "${MesajlarRepository().mesajlar.length} yeni mesaj"))
+              child: Text(
+                  style: TextStyle(fontSize: 20),
+                  "${MesajlarRepository().yeniMesajSayisi} yeni mesaj"),
+              onPressed: () {
+                _mesajlaraGit(context);
+              },
+            )
           ],
         ),
       ),
@@ -90,9 +91,12 @@ class _AnasayfaState extends State<Anasayfa> {
     }));
   }
 
-  void _mesajlaraGit(BuildContext context) {
-    Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+  Future<void> _mesajlaraGit(BuildContext context) async {
+    await Navigator.of(context).push(MaterialPageRoute(builder: (context) {
       return MesajlarSayfasi(mesajlarRepository);
     }));
+    setState(() {
+      //print("${mesajlarRepository.yeniMesajSayisi}");
+    });
   }
 }

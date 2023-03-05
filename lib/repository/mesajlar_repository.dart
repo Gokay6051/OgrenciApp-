@@ -6,6 +6,8 @@ class MesajlarRepository {
         DateTime.now().subtract(Duration(minutes: 6))),
     Mesaj("Susun la kafam şişti", "Ahmet", DateTime.now())
   ];
+
+  int yeniMesajSayisi = 4;
 }
 
 class Mesaj {
