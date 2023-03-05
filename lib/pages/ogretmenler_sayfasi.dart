@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:ogrenci_app/repository/ogretmenler_repository.dart';
 
-class OgrencilerSayfasi extends StatefulWidget {
-  const OgrencilerSayfasi({Key? key}) : super(key: key);
+class OgretmenlerSayfasi extends StatefulWidget {
+  final OgretmenlerRepository ogretmenlerRepository;
+  const OgretmenlerSayfasi(this.ogretmenlerRepository, {Key? key})
+      : super(key: key);
 
   @override
-  State<OgrencilerSayfasi> createState() => _OgrencilerSayfasiState();
+  State<OgretmenlerSayfasi> createState() => _OgretmenlerSayfasiState();
 }
 
-class _OgrencilerSayfasiState extends State<OgrencilerSayfasi> {
-  int ogrenci = 15;
+class _OgretmenlerSayfasiState extends State<OgretmenlerSayfasi> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Öğrenciler"),
+        title: Text("Öğretmenler"),
       ),
       body: Column(
         children: [
@@ -23,7 +25,7 @@ class _OgrencilerSayfasiState extends State<OgrencilerSayfasi> {
             child: Center(
               child: Padding(
                 padding: EdgeInsets.symmetric(vertical: 15, horizontal: 25),
-                child: Text(style: TextStyle(fontSize: 22), "$ogrenci Öğrenci"),
+                child: Text(style: TextStyle(fontSize: 22), "15 Öğretmen"),
               ),
             ),
           ),
@@ -31,13 +33,11 @@ class _OgrencilerSayfasiState extends State<OgrencilerSayfasi> {
               child: ListView.separated(
             itemBuilder: (context, index) => Card(
               child: ListTile(
-                title: Text("Ali"),
-                trailing: IconButton(
-                    onPressed: () {}, icon: Icon(Icons.favorite_border)),
+                title: Text("Osman"),
               ),
             ),
             separatorBuilder: (context, index) => Divider(),
-            itemCount: ogrenci,
+            itemCount: 15,
           ))
         ],
       ),

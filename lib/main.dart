@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:ogrenci_app/ogrenciler_sayfasi.dart';
-import 'package:ogrenci_app/ogretmenler_sayfasi.dart';
-import 'package:ogrenci_app/mesajlar_sayfasi.dart';
+import 'package:ogrenci_app/pages/ogrenciler_sayfasi.dart';
+import 'package:ogrenci_app/pages/ogretmenler_sayfasi.dart';
+import 'package:ogrenci_app/pages/mesajlar_sayfasi.dart';
+import 'package:ogrenci_app/repository/mesajlar_repository.dart';
+import 'package:ogrenci_app/repository/ogrenciler_repository.dart';
+import 'package:ogrenci_app/repository/ogretmenler_repository.dart';
 
 void main() {
   runApp(const OgrenciApp());
@@ -21,16 +24,25 @@ class OgrenciApp extends StatelessWidget {
   }
 }
 
-class Anasayfa extends StatelessWidget {
+class Anasayfa extends StatefulWidget {
   const Anasayfa({super.key, required this.title});
 
   final String title;
 
   @override
+  State<Anasayfa> createState() => _AnasayfaState();
+}
+
+class _AnasayfaState extends State<Anasayfa> {
+  MesajlarRepository mesajlarRepository = MesajlarRepository();
+  OgrencilerRepository ogrencilerRepository = OgrencilerRepository();
+  OgretmenlerRepository ogretmenlerRepository = OgretmenlerRepository();
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(title),
+        title: Text(widget.title),
       ),
       body: Center(
         child: Column(
@@ -38,31 +50,49 @@ class Anasayfa extends StatelessWidget {
           children: <Widget>[
             TextButton(
               onPressed: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => OgrencilerSayfasi(),
-                ));
+                _ogrencilereGit(context);
               },
-              child: Text(style: TextStyle(fontSize: 20), "Öğrenciler"),
+              child: Text(
+                  style: TextStyle(fontSize: 20),
+                  "${OgrencilerRepository().ogrenciler.length} Öğrenci"),
             ),
             //SizedBox(),
             TextButton(
                 onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => OgretmenlerSayfasi(),
-                  ));
+                  _ogretmenlereGit(context);
                 },
-                child: Text(style: TextStyle(fontSize: 20), "Öğretmenler")),
+                child: Text(
+                    style: TextStyle(fontSize: 20),
+                    "${OgretmenlerRepository().ogretmenler.length} Öğretmen")),
 
             TextButton(
                 onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => MesajlarSayfasi(),
-                  ));
+                  _mesajlaraGit(context);
                 },
-                child: Text(style: TextStyle(fontSize: 20), "Mesajlar"))
+                child: Text(
+                    style: TextStyle(fontSize: 20),
+                    "${MesajlarRepository().mesajlar.length} yeni mesaj"))
           ],
         ),
       ),
     );
+  }
+
+  void _ogrencilereGit(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+      return OgrencilerSayfasi(ogrencilerRepository);
+    }));
+  }
+
+  void _ogretmenlereGit(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+      return OgretmenlerSayfasi(ogretmenlerRepository);
+    }));
+  }
+
+  void _mesajlaraGit(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+      return MesajlarSayfasi(mesajlarRepository);
+    }));
   }
 }
