@@ -67,6 +67,7 @@ class _OgrenciSatiriState extends State<OgrenciSatiri> {
       trailing: IconButton(
           onPressed: () {
             setState(() {
+              //repository icinde seviyorMuyum methodu olusturulabilir
               widget.ogrencilerRepository.sevdiklerim.contains(widget.ogrenci)
                   ? widget.ogrencilerRepository.sevme(widget.ogrenci)
                   : widget.ogrencilerRepository.sev(widget.ogrenci);
